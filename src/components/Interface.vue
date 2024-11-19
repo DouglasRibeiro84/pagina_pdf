@@ -190,14 +190,59 @@ const exportPdf = () => {
 
 <template>
     <div class="container">
-                <div class="row g-3">
-                    <div class="col-md-4 ps-5"></div>
-                    <div class="col-md-4 ps-5">
-                        <button class="btn btn-primary mt-5 fs-2" @click.prevent="exportPdf">Visualizar <i class="bi bi-filetype-pdf"></i></button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-success mt-5 fs-2" @click.prevent="exportPdf">Baixar <i class="bi bi-filetype-pdf"></i></button>
-                    </div>
-                </div>
+        <div class="row mt-5 pb-5 p-4">
+            <div class="col-md-6 mt-md-0 mt-3">
+                <input type="text" class="form-control" placeholder="Cpf/Cnpj:">
+            </div>
+            <div class="col-md-6 mt-md-0 mt-3">
+                <input type="text" class="form-control" placeholder="Nome do cliente:">
+            </div>
+        </div>
+        <div class="row g-3 bg-light p-4 roudend border">
+            <div class="col-md-6 ">
+                <input class="form-control" type="text" placeholder="Material">
+            </div>
+            <div class="col-md-2 ">
+                <input class="form-control " type="text" placeholder="Valor">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control " type="text" placeholder="Quantidade">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success w-100"> Adicionar+</button>
+            </div>
+        </div>
+        <div class="row mt-2  g-3 ps-4 pe-4 border-bottom">
+            <div class="col-md-6 ">
+                <input class="form-control" type="text" placeholder="Material">
+            </div>
+            <div class="col-md-2 ">
+                <input class="form-control " type="text" placeholder="Valor">
+            </div>
+            <div class="col-md-2">
+                <input class="form-control " type="text" placeholder="Quantidade">
+            </div>
+            <div class="col-md-2 mb-3">
+                <button class="btn btn-danger w-100"> <i class="bi bi-trash"></i></button>
+            </div>
+        </div>
+        <div class="row p-4 mt-3">
+            <div class="col-md-6 border p-3 bg-light">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia dicta debitis suscipit! Veritatis
+                    expedita, possimus at nulla dignissimos id vitae, non laudantium dolorem vel odit aliquid
+                    voluptatibus voluptates commodi consequuntur?
+                </p>
+                <span class="float-end pe-2 fs-5"><i class="bi bi-clipboard"></i></span>
+            </div>
+            <div class="col-md-3 mt-md-0 mt-3">
+                <button class="btn btn-primary w-100 " @click.prevent="exportPdf">Visualizar <i
+                        class="bi bi-filetype-pdf"></i></button>
+            </div>
+            <div class="col-md-3 mt-md-0 mt-3">
+                <button class="btn btn-success w-100" @click.prevent="exportPdf">Baixar <i
+                        class="bi bi-filetype-pdf"></i></button>
+            </div>
+        </div>
     </div>
 </template>
