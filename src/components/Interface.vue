@@ -190,14 +190,14 @@ const exportPdf = () => {
 
 <template>
     <div class="container">
-        <header class="mt-3">
-            <div class="row d-flex align-items-center p-4 pb-sm-1">
+        <header class="mt-3 bg-secondary text-white rounded p-3">
+            <div class="row d-flex align-items-center">
                 <div class="col-md-8">
-                    <h1 class="text-center text-md-start">
-                        Tipo de cliente
+                    <h1 class="text-center text-md-start ms-md-5">
+                        Pessoal Fisca/Juridica
                     </h1>
                 </div>
-                <div class="col-md-4 mt-md-0 mt-3">
+                <div class="col-md-3 mt-md-0 mt-3">
                     <select class="form-select form-select-sm">
                         <option>Cpf</option>
                         <option>Cnpj</option>
@@ -285,7 +285,7 @@ const exportPdf = () => {
         </div>
         <div class="row p-4 border-bottom ">
             <div class="col-md-6 mb-md-0 mb-3 ">
-                <button class="btn btn-warning text-white w-100  "> Limpar  <i class=" ms-1 bi bi-eraser"></i></button>
+                <button class="btn btn-warning text-white w-100  "> Limpar <i class=" ms-1 bi bi-eraser"></i></button>
             </div>
             <div class="col-md-6">
                 <button class="btn btn-success w-100"> Salvar <i class="ms-1 bi bi-box-arrow-down"></i></button>
@@ -297,6 +297,8 @@ const exportPdf = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia dicta debitis suscipit! Veritatis
                     expedita, possimus at nulla dignissimos id vitae, non laudantium dolorem vel odit aliquid
                     voluptatibus voluptates commodi consequuntur?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, commodi deserunt ad perspiciatis dolores iure delectus molestiae dolor vero fugit veniam porro magnam neque numquam facere soluta! Provident, iste a.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, eligendi pariatur ex esse consectetur blanditiis quibusdam nisi. Id, soluta! Autem repellendus, quaerat iste nesciunt neque ex recusandae earum architecto minus!
                 </p>
                 <span class="float-end pe-2 fs-5"><i class="bi bi-clipboard"></i></span>
             </div>
@@ -310,4 +312,9 @@ const exportPdf = () => {
             </div>
         </div>
     </div>
+    <footer class="bg-secondary text-light text-center py-2">
+        <div class="container">
+            <p class="mb-0">© Todos os direitos reservados- 2024.</p>
+        </div>
+    </footer>
 </template>
