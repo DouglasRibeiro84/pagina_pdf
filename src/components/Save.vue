@@ -190,115 +190,19 @@ const exportPdf = () => {
 
 <template>
     <div class="container">
-        <header class="mt-3 bg-secondary text-white rounded p-3">
-            <div class="row d-flex align-items-center">
-                <div class="col-md-8">
-                    <h1 class="text-center text-md-start ms-md-5">
-                        Pessoal Fisca/Juridica
-                    </h1>
-                </div>
-                <div class="col-md-3 mt-md-0 mt-3">
-                    <select class="form-select form-select-sm">
-                        <option>Cpf</option>
-                        <option>Cnpj</option>
-                    </select>
-                </div>
-            </div>
-        </header>
-        <div class="row p-4">
-            <div class="col-md-6 mt-md-0 mt-3">
-                <input type="text" class="form-control" placeholder="Cpf/Cnpj:">
-            </div>
-            <div class="col-md-6 mt-md-0 mt-3">
-                <input type="text" class="form-control" placeholder="Nome do cliente:">
-            </div>
-            <div class="col-md-12 mt-md-3 mt-3">
-                <input type="text" class="form-control" placeholder="Razão social:">
-            </div>
-            <div class="col-md-8 mt-md-3 mt-3">
-                <input type="text" class="form-control" placeholder="Endereço:">
-            </div>
-            <div class="col-md-4 mt-md-3 mt-3">
-                <input type="text" class="form-control" placeholder="Cep:">
-            </div>
-        </div>
-        <div class="row bg-light ps-4 pe-4 pb-4 pt-2 border">
-            <div class="col-12">
-                <h2 class="text-center mb-3">
-                    Adicionar materias
-                </h2>
-            </div>
-            <div class="col-md-6 ">
-                <input class="form-control mt-md-0 mt-3" type="text" placeholder="Material">
-            </div>
-            <div class="col-md-2 ">
-                <input class="form-control mt-md-0 mt-3 " type="text" placeholder="Valor">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control mt-md-0 mt-3" type="text" placeholder="Quantidade">
-            </div>
-            <div class="col-md-2 mt-md-0 mt-3">
-                <button class="btn btn-success w-100"> Adicionar+</button>
-            </div>
-        </div>
-        <div class="row mt-2  g-3 ps-4 pe-4">
-            <div class="col-md-6 ">
-                <input class="form-control" type="text" placeholder="Material">
-            </div>
-            <div class="col-md-2 ">
-                <input class="form-control " type="text" placeholder="Valor">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control " type="text" placeholder="Quantidade">
-            </div>
-            <div class="col-md-2 mb-3">
-                <button class="btn btn-danger w-100"> <i class="bi bi-trash"></i></button>
-            </div>
-        </div>
-        <div class="row mt-2  g-3 ps-4 pe-4">
-            <div class="col-md-6 ">
-                <input class="form-control" type="text" placeholder="Material">
-            </div>
-            <div class="col-md-2 ">
-                <input class="form-control " type="text" placeholder="Valor">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control " type="text" placeholder="Quantidade">
-            </div>
-            <div class="col-md-2 mb-3">
-                <button class="btn btn-danger w-100"> <i class="bi bi-trash"></i></button>
-            </div>
-        </div>
-        <div class="row mt-2  g-3 ps-4 pe-4">
-            <div class="col-md-6 ">
-                <input class="form-control" type="text" placeholder="Material">
-            </div>
-            <div class="col-md-2 ">
-                <input class="form-control " type="text" placeholder="Valor">
-            </div>
-            <div class="col-md-2">
-                <input class="form-control " type="text" placeholder="Quantidade">
-            </div>
-            <div class="col-md-2 mb-3">
-                <button class="btn btn-danger w-100"> <i class="bi bi-trash"></i></button>
-            </div>
-        </div>
-        <div class="row p-4 border-bottom ">
-            <div class="col-md-6 mb-md-0 mb-3 ">
-                <button class="btn btn-warning text-white w-100  "> Limpar <i class=" ms-1 bi bi-eraser"></i></button>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-success w-100"> Salvar <i class="ms-1 bi bi-box-arrow-down"></i></button>
-            </div>
-        </div>
+        
         <div class="row p-4 mt-3">
             <div class="col-md-6 border p-3 bg-light">
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia dicta debitis suscipit! Veritatis
                     expedita, possimus at nulla dignissimos id vitae, non laudantium dolorem vel odit aliquid
                     voluptatibus voluptates commodi consequuntur?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, commodi deserunt ad perspiciatis dolores iure delectus molestiae dolor vero fugit veniam porro magnam neque numquam facere soluta! Provident, iste a.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, eligendi pariatur ex esse consectetur blanditiis quibusdam nisi. Id, soluta! Autem repellendus, quaerat iste nesciunt neque ex recusandae earum architecto minus!
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, commodi deserunt ad perspiciatis
+                    dolores iure delectus molestiae dolor vero fugit veniam porro magnam neque numquam facere soluta!
+                    Provident, iste a.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, eligendi pariatur ex esse
+                    consectetur blanditiis quibusdam nisi. Id, soluta! Autem repellendus, quaerat iste nesciunt neque ex
+                    recusandae earum architecto minus!
                 </p>
                 <span class="float-end pe-2 fs-5"><i class="bi bi-clipboard"></i></span>
             </div>
