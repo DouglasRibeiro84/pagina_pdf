@@ -2,6 +2,16 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.addVirtualFileSystem(pdfFonts);
+import { computed } from 'vue';
+
+const props = defineProps({
+    materiais: {
+        type: Array,
+        required: true
+    }
+});
+
+const materiais = computed(() => props.materiais);
 
 const exportPdf = () => {
     const docDefinition = {
@@ -65,45 +75,18 @@ const exportPdf = () => {
                             widths: [250, '*', 80],
 
                             body: [
-                                [{ text: 'Material', style: 'text' },
-                                { text: 'Quant', style: 'text' },
-                                { text: 'Valor', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: 'REGULADOR 12 KL ALIANÇA', style: 'text' },
-                                { text: '2', style: 'text' },
-                                { text: '580,00', style: 'text' }],
-                                [{ text: '' },
-                                { text: '' },
-                                { text: '' }],
-                                [{ text: 'VALOR DO MATERIAL', style: 'text' },
-                                { text: '15', style: 'text' },
-                                { text: 'R$      816,00', style: 'text' }],
-                                [{ text: '' },
-                                { text: '' },
-                                { text: '' }],
-                                [{ text: 'MÃO DE OBRA', style: 'text' },
-                                { text: '' },
-                                { text: 'R$      380,00 ', style: 'text' }],
-                                [{ text: '' },
-                                { text: '' },
-                                { text: '' }],
-                                [{ text: 'VALOR TOTAL ', style: 'text' },
-                                { text: '' },
-                                { text: 'R$   1.196,00 ', style: 'text' }],
+                                [{ text: 'Material', style: 'text' }, { text: 'Quant', style: 'text' }, { text: 'Valor', style: 'text' }],
+                                ...props.materiais.map(material => [
+                                    { text: material.nomeMaterial, style: 'text' },
+                                    { text: material.quantidade.toString(), style: 'text' },
+                                    { text: `R$ ${material.preco.toFixed(2)}`, style: 'text' }
+                                ]),
+                                [{ text: '' }, { text: '' }, { text: '' }],
+                                [{ text: 'VALOR DO MATERIAL', style: 'text' }, { text: '15', style: 'text' }, { text: 'R$ 816,00', style: 'text' }],
+                                [{ text: '' }, { text: '' }, { text: '' }],
+                                [{ text: 'MÃO DE OBRA', style: 'text' }, { text: '', style: 'text' }, { text: 'R$ 380,00', style: 'text' }],
+                                [{ text: '' }, { text: '' }, { text: '' }],
+                                [{ text: 'VALOR TOTAL ', style: 'text' }, { text: '', style: 'text' }, { text: 'R$ 1.196,00', style: 'text' }]
                             ]
                         },
                         layout: {
@@ -190,20 +173,34 @@ const exportPdf = () => {
 
 <template>
     <div class="container">
-        
+
         <div class="row p-4 mt-3">
-            <div class="col-md-6 border p-3 bg-light">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia dicta debitis suscipit! Veritatis
-                    expedita, possimus at nulla dignissimos id vitae, non laudantium dolorem vel odit aliquid
-                    voluptatibus voluptates commodi consequuntur?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, commodi deserunt ad perspiciatis
-                    dolores iure delectus molestiae dolor vero fugit veniam porro magnam neque numquam facere soluta!
-                    Provident, iste a.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, eligendi pariatur ex esse
-                    consectetur blanditiis quibusdam nisi. Id, soluta! Autem repellendus, quaerat iste nesciunt neque ex
-                    recusandae earum architecto minus!
-                </p>
+            <div class="col-md-6 p-3 bg-light">
+                <span class="text-uppercase text-center">
+                    <p>
+                        ---ORÇAMENTO VIAGÁS--- <br>
+                        CNPJ 33.310.416/0001-65 <br>
+                        I.E:9081112573<br>
+                        Endereço: AV MONTEIRO TORINHO N° 261<br>
+                        LOJA 01<br>
+                        TEL: (41) 30686553 (41)996160043<br>
+                        E- MAIL: VIAGASCURITIBA@GMAIL.COM<br>
+                        CLIENTE: Fict<br>
+                    </p>
+                    <ul class="list-group p-3 text-uppercase ">
+                        <li v-for="(material, index) in materiais" :key="index" class="list-group-item">
+                            <b>MATERIAL:</b> {{ material.nomeMaterial }} <br>
+                            <strong>QUANTIDADE:</strong> {{ material.quantidade }} <br>
+                            <strong>PREÇO:</strong> R$ {{ material.preco.toFixed(2) }} <br>
+                        </li>
+                    </ul>
+                    <p class="mt-4">
+                        FORMA DE PAGAMENTO OS MATERIAIS ATÉ 06 ×NO CARTÃO SEM JUROS, 05%DESCONTO NO PREÇO AVISTA NO PIX.
+                        <br>
+                        MÃO DE OBRA NO PREÇO AVISTA NO PIX. <br>
+                        VIAGÁS AGRADECE A PREFERENCIA 
+                    </p>
+                </span>
                 <span class="float-end pe-2 fs-5"><i class="bi bi-clipboard"></i></span>
             </div>
             <div class="col-md-3 mt-md-0 mt-3">

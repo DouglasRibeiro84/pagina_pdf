@@ -1,28 +1,17 @@
-<script>
-import { reactive } from "vue";
+<script setup>
+import { reactive } from 'vue';
+
+
 import Cabecalho from "./components/Cabecalho.vue";
 import Save from "./components/Save.vue";
 import Interface_cpf from "./components/Interface_cpf.vue";
 import Interface_cnpj from "./components/Interface_cnpj.vue";
 import Materiais from "./components/Materiais.vue";
 
-export default {
-  name: 'App',
-  components: {
-    Cabecalho,
-    Interface_cpf,
-    Interface_cnpj,
-    Materiais,
-    Save
-  },
-  data() {
-    return {
-      estado: reactive({
-        filtro: 'cpf'
-      })
-    };
-  }
-}
+const estado = reactive({
+  filtro: 'cpf',
+  material: [] // O estado compartilhado
+});
 </script>
 
 <template>
@@ -32,13 +21,11 @@ export default {
     <template v-if="estado.filtro === 'cpf'">
       <Interface_cpf />
     </template>
-
     <template v-if="estado.filtro === 'cnpj'">
       <Interface_cnpj />
     </template>
-    <Materiais />
-    <Save />
+
+    <Materiais v-model="estado.material" />
+    <Save :materiais="estado.material" />
   </div>
 </template>
-
-<style scoped></style>
