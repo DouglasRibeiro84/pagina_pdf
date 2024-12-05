@@ -1,8 +1,8 @@
 <script setup>
-import { reactive, watch} from 'vue';
+import { reactive, watch } from 'vue';
 
 const props = defineProps(['modelValue']); // modelValue será o material recebido pelo v-model
-const emit = defineEmits(['update:modelValue']); // Evento para atualizar o material
+const emit = defineEmits(['update:modelValue', 'update:maoDeObra']); // Evento para atualizar o material
 
 const estado = reactive({
     materialTemp: '',
@@ -33,6 +33,10 @@ const removerMaterial = (index) => {
     emit('update:modelValue', atualizado);
 };
 
+const atualizaMaoDeObra = (novoValor) => {
+    emit('update:maoDeObra', parseFloat(novoValor)); // Emitindo o evento corretamente
+};
+
 </script>
 
 <template>
@@ -48,7 +52,7 @@ const removerMaterial = (index) => {
             </div>
             <div class="col-md-2">
                 <input v-model="estado.quantidadeTemp" class="form-control mt-md-0 mt-3" type="number"
-                placeholder="Quantidade:">
+                    placeholder="Quantidade:">
             </div>
             <div class="col-md-2">
                 <input id="preco" v-model="estado.precoTemp" class="form-control mt-md-0 mt-3" type="number" step="any"
@@ -80,4 +84,13 @@ const removerMaterial = (index) => {
             </div>
         </li>
     </ul>
+    <div class="row mt-4 g-3 ps-4 pe-4">
+        <div class="col-md-8">
+            <input class="form-control" type="text" placeholder="Mão de obra" disabled>
+        </div>
+        <div class="col-md-4">
+            <input @input="atualizaMaoDeObra($event.target.value)" class="form-control mt-md-0 mt-3" type="number"
+                step="any" placeholder="Valor:">
+        </div>
+    </div>
 </template>

@@ -3,15 +3,84 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.addVirtualFileSystem(pdfFonts);
 import { computed } from 'vue';
+import { ref, defineProps } from 'vue';
+
+
+// Estado para controlar se o texto foi copiado
+
 
 const props = defineProps({
     materiais: {
         type: Array,
         required: true
+    },
+    maoDeObra: {
+        type: Number,
+        required: true
+    },
+    clienteInfo: {
+        type: Object,
+        required: true
     }
 });
 
-const materiais = computed(() => props.materiais);
+const copiado = ref(false);
+
+// Função para copiar o conteúdo visível (texto) para a área de transferência
+const copiarTexto = () => {
+    // Pegar o conteúdo da div ou elemento HTML desejado
+    const textoParaCopiar = document.getElementById('orcamentoTexto').innerText;
+
+    // Criar um elemento temporário para copiar o conteúdo de texto
+    const tempElement = document.createElement('textarea');
+    tempElement.value = textoParaCopiar;  // Definir o valor para o conteúdo que queremos copiar
+    document.body.appendChild(tempElement);  // Adicionar ao body
+
+    // Selecionar o conteúdo do texto
+    tempElement.select();
+    tempElement.setSelectionRange(0, 99999);  // Para dispositivos móveis
+
+    // Copiar para a área de transferência
+    document.execCommand('copy');
+
+    // Remover o elemento temporário
+    document.body.removeChild(tempElement);
+
+    copiado.value = true;
+
+    // Resetar o ícone de "copiado" após 2 segundos
+    setTimeout(() => {
+        copiado.value = false;
+    }, 2000);
+};
+
+
+const dataPersonalizada = (() => {
+    const hoje = new Date();
+    return `${hoje.getDate().toString().padStart(2, '0')}/${(hoje.getMonth() + 1).toString().padStart(2, '0')}/${hoje.getFullYear()}`;
+})()
+
+const valorMaterial = computed(() => {
+    return props.materiais.reduce((total, material) => {
+        return total + (material.preco * material.quantidade);
+    }, 0);
+})
+
+const quantidadeTotal = props.materiais.reduce((total, material) => {
+    return total + material.quantidade;
+}, 0)
+
+const precoTotal = computed(() => {
+    return props.materiais.reduce((total, material) => {
+        return total + (material.preco * material.quantidade);  // Soma o valor de cada material * sua quantidade
+    }, 0);
+});
+
+const valorTotal = computed(() => {
+    return valorMaterial.value + props.maoDeObra;
+});
+
+
 
 const exportPdf = () => {
     const docDefinition = {
@@ -31,24 +100,24 @@ const exportPdf = () => {
                         margin: [0, 0, 0, 8],
                     },
                     {
-                        text: 'CLIENTE: fict',
+                        text: `Cliente: ${props.clienteInfo.nomeCliente}`,
                         style: 'text',
                         margin: [0, 0, 0, 6],
                     },
                     {
-                        text: 'RAZÃO SOCIAL: fict',
+                        text: `Razão social: ${props.clienteInfo.razaoSocial} / Cnpj:${props.clienteInfo.cnpj}`,
                         style: 'text',
                         margin: [0, 0, 0, 6],
                     },
                     {
-                        text: 'ENDEREÇO: fict',
+                        text: `Endereço: ${props.clienteInfo.endereco} - ${props.clienteInfo.cep}`,
                         style: 'text',
                         margin: [0, 0, 0, 6],
                     },
                     {
                         text: [
                             {
-                                text: 'Data:10/11/2024  ',
+                                text: `Data: ${dataPersonalizada} `,
                                 style: 'text',
                             },
                             {
@@ -82,11 +151,11 @@ const exportPdf = () => {
                                     { text: `R$ ${material.preco.toFixed(2)}`, style: 'text' }
                                 ]),
                                 [{ text: '' }, { text: '' }, { text: '' }],
-                                [{ text: 'VALOR DO MATERIAL', style: 'text' }, { text: '15', style: 'text' }, { text: 'R$ 816,00', style: 'text' }],
+                                [{ text: 'Valor do material', style: 'text' }, { text: '', style: 'text' }, { text: `R$ ${valorMaterial.value.toFixed(2)}`, style: 'text' }],
                                 [{ text: '' }, { text: '' }, { text: '' }],
-                                [{ text: 'MÃO DE OBRA', style: 'text' }, { text: '', style: 'text' }, { text: 'R$ 380,00', style: 'text' }],
+                                [{ text: 'Mão de obra', style: 'text' }, { text: '', style: 'text' }, { text: `R$ ${props.maoDeObra.toFixed(2)}`, style: 'text' }],
                                 [{ text: '' }, { text: '' }, { text: '' }],
-                                [{ text: 'VALOR TOTAL ', style: 'text' }, { text: '', style: 'text' }, { text: 'R$ 1.196,00', style: 'text' }]
+                                [{ text: 'Valor total ', style: 'text' }, { text: '', style: 'text' }, { text: `R$ ${valorTotal.value.toFixed(2)}`, style: 'text' }]
                             ]
                         },
                         layout: {
@@ -173,38 +242,50 @@ const exportPdf = () => {
 
 <template>
     <div class="container">
-
         <div class="row p-4 mt-3">
             <div class="col-md-6 p-3 bg-light">
-                <span class="text-uppercase text-center">
+                <span id="orcamentoTexto" class="text-uppercase text-center">
                     <p>
                         ---ORÇAMENTO VIAGÁS--- <br>
-                        CNPJ 33.310.416/0001-65 <br>
-                        I.E:9081112573<br>
-                        Endereço: AV MONTEIRO TORINHO N° 261<br>
-                        LOJA 01<br>
-                        TEL: (41) 30686553 (41)996160043<br>
-                        E- MAIL: VIAGASCURITIBA@GMAIL.COM<br>
-                        CLIENTE: Fict<br>
+                        CNPJ: 33.310.416/0001-65 <br>
+                        I.E: 9081112573 <br>
+                        Endereço: AV MONTEIRO TORINHO N° 261 <br>
+                        LOJA 01 <br>
+                        TEL: (41) 30686553 (41)996160043 <br>
+                        E- MAIL: VIAGASCURITIBA@GMAIL.COM <br>
+                        CLIENTE: {{ props.clienteInfo.nomeCliente }}<br>
                     </p>
-                    <ul class="list-group p-3 text-uppercase ">
-                        <li v-for="(material, index) in materiais" :key="index" class="list-group-item">
+                    <ul class="list-group p-3 text-uppercase">
+                        <li v-for="(material, index) in props.materiais" :key="index" class="list-group-item">
                             <b>MATERIAL:</b> {{ material.nomeMaterial }} <br>
                             <strong>QUANTIDADE:</strong> {{ material.quantidade }} <br>
-                            <strong>PREÇO:</strong> R$ {{ material.preco.toFixed(2) }} <br>
+                            <strong>PREÇO UNITÁRIO:</strong> R$ {{ material.preco.toFixed(2) }} <br>
+                            <strong>PREÇO TOTAL:</strong> R$ {{ precoTotal.toFixed(2) }} <br>
                         </li>
                     </ul>
+                    <p>
+                        VALOR DA MÃO OBRA: {{ props.maoDeObra.toFixed(2) }}
+                    </p>
+                    <p>
+                        VALOR TOTAL: {{ valorTotal.toFixed(2) }}
+                    </p>
                     <p class="mt-4">
-                        FORMA DE PAGAMENTO OS MATERIAIS ATÉ 06 ×NO CARTÃO SEM JUROS, 05%DESCONTO NO PREÇO AVISTA NO PIX.
+                        FORMA DE PAGAMENTO OS MATERIAIS ATÉ 06 ×NO CARTÃO SEM JUROS, 05% DESCONTO NO PREÇO À VISTA NO
+                        PIX.
                         <br>
-                        MÃO DE OBRA NO PREÇO AVISTA NO PIX. <br>
-                        VIAGÁS AGRADECE A PREFERENCIA 
+                        MÃO DE OBRA NO PREÇO À VISTA NO PIX. <br>
+                        VIAGÁS AGRADECE A PREFERÊNCIA
                     </p>
                 </span>
-                <span class="float-end pe-2 fs-5"><i class="bi bi-clipboard"></i></span>
+
+                <!-- Ícone de copiar com base no estado copiado -->
+                <span class="float-end pe-2 fs-5">
+                    <i class="bi" :class="copiado ? 'bi-check-circle' : 'bi-clipboard'" @click="copiarTexto"></i>
+                </span>
             </div>
+
             <div class="col-md-3 mt-md-0 mt-3">
-                <button class="btn btn-primary w-100 " @click.prevent="exportPdf">Visualizar <i
+                <button class="btn btn-primary w-100" @click.prevent="exportPdf">Visualizar <i
                         class="bi bi-filetype-pdf"></i></button>
             </div>
             <div class="col-md-3 mt-md-0 mt-3">
