@@ -249,7 +249,7 @@ const exportPdf = () => {
                         ---ORÇAMENTO VIAGÁS--- <br>
                         CNPJ: 33.310.416/0001-65 <br>
                         I.E: 9081112573 <br>
-                        Endereço: AV MONTEIRO TORINHO N° 261 <br>
+                        Endereço: AV MONTEIRO TOURINHO N° 261 <br>
                         LOJA 01 <br>
                         TEL: (41) 30686553 (41)996160043 <br>
                         E- MAIL: VIAGASCURITIBA@GMAIL.COM <br>
