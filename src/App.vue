@@ -26,16 +26,32 @@ const estado = reactive({
   <div class="container">
     <Cabecalho :filtro="estado.filtro" @update-filtro="estado.filtro = $event" />
 
-    <template v-if="estado.filtro === 'cpf'">
-      <Interface_cpf v-model="estado.clienteInfo" />
-    </template>
+    <transition name="fade" mode="out-in">
+      <div :key="estado.filtro">
+        <template v-if="estado.filtro === 'cpf'">
+          <Interface_cpf v-model="estado.clienteInfo" />
+        </template>
 
-    <template v-if="estado.filtro === 'cnpj'">
-      <Interface_cnpj v-model="estado.clienteInfo" />
-    </template>
+        <template v-if="estado.filtro === 'cnpj'">
+          <Interface_cnpj v-model="estado.clienteInfo" />
+        </template>
+      </div>
+    </transition>
 
     <Materiais v-model="estado.material" @update:maoDeObra="estado.maoDeObra = $event" />
 
     <Save :materiais="estado.material" :maoDeObra="estado.maoDeObra" :clienteInfo="estado.clienteInfo" />
   </div>
 </template>
+
+<style scoped>
+/* Efeito de fade ao entrar e sair */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s ease;
+}
+
+/* Opacidade 0 na entrada e saída */
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores do Vue */ {
+  opacity: 0;
+}
+</style>

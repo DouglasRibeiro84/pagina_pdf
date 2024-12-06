@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 
 const props = defineProps(['modelValue']); // modelValue será o material recebido pelo v-model
 const emit = defineEmits(['update:modelValue', 'update:maoDeObra']); // Evento para atualizar o material
@@ -64,8 +64,8 @@ const atualizaMaoDeObra = (novoValor) => {
         </div>
     </form>
 
-    <!-- Lista de materiais -->
-    <ul class="list-group">
+    <!-- Lista de materiais com transição -->
+    <transition-group name="fade" tag="ul" class="list-group">
         <li v-for="(material, index) in modelValue" :key="material.nomeMaterial" class="row mt-2 g-3 ps-4 pe-4">
             <div class="col-md-6">
                 <input class="form-control" type="text" :placeholder="material.nomeMaterial" disabled>
@@ -83,7 +83,9 @@ const atualizaMaoDeObra = (novoValor) => {
                 </button>
             </div>
         </li>
-    </ul>
+    </transition-group>
+
+    <!-- Mão de obra -->
     <div class="row mt-4 g-3 ps-4 pe-4">
         <div class="col-md-8">
             <input class="form-control" type="text" placeholder="Mão de obra" disabled>
@@ -94,3 +96,31 @@ const atualizaMaoDeObra = (novoValor) => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-to {
+    opacity: 1;
+}
+
+.fade-leave {
+    opacity: 1;
+}
+
+.fade-leave-to {
+    opacity: 0;
+}
+</style>
