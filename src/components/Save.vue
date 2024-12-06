@@ -287,9 +287,8 @@ const baixarPdf = () => {
                     </p>
                 </span>
 
-                <!-- Ícone de copiar com base no estado copiado -->
                 <span class="float-end pe-2 fs-5">
-                    <i class="bi" :class="copiado ? 'bi-check-circle' : 'bi-clipboard'" @click="copiarTexto"></i>
+                    <i class="bi" :class="copiado ? 'bi-check-circle text-success' : 'bi-clipboard '" @click="copiarTexto"></i>
                 </span>
             </div>
 

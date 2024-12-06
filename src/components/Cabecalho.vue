@@ -32,7 +32,7 @@ img{
     height: 5em;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 728px) {
     img {
         margin: 0 auto;
         display: block;
